@@ -1,43 +1,70 @@
 import static java.lang.System.out;
 
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.math.*;
 import java.util.Random;
 
 public class Main {
+    private static int getIntInput(Scanner scanner, String message) {
+        while (true) {
+            out.print(message);
+            try {
+                return scanner.nextInt();
+            } catch (InputMismatchException e) {
+                out.println("Введите число");
+                scanner.next();
+            }
+        }
+    }
+
+    private static char getCharInput(Scanner scanner) {
+        while (true) {
+            try {
+                return scanner.next().charAt(0);
+            } catch (InputMismatchException e) {
+                out.println("Введите символ.");
+                scanner.next();
+            }
+        }
+    }
+
     // Задание 1
-    public static int sumLastNumbs(int x) {
+    public int sumLastNumbs(int x) {
         int lastDigit = x % 10;
         int secondLast = (x / 10) % 10;
         return Math.abs(lastDigit + secondLast);
     }
 
-    public static boolean isPositive (int x) {
+    public boolean isPositive (int x) {
         return x >= 0;
     }
 
-    public static boolean isUpperCase (char x) {
+    public boolean isUpperCase (char x) {
         return Character.isUpperCase(x);
     }
 
-    public static boolean isDivisor (int a, int b) {
+    public boolean isDivisor (int a, int b) {
+        if (b == 0) {
+            return false;
+        }
         return a % b == 0;
     }
 
-    public static int lastNumbsSum (int a, int b) {
-        return (a % 10 + b % 10) % 10;
+    public int lastNumbsSum (int a, int b) {
+        return Math.abs((a % 10 + b % 10) % 10);
     }
 
     // Задание 2
-    public static double safeDiv (int x, int y) {
+    public double safeDiv (int x, int y) {
         if (y == 0) {
             return 0.0;
         }
         return (double) x / y;
     }
 
-    public static String makeDecision(int x, int y) {
+    public String makeDecision(int x, int y) {
         if (x > y) {
             return x + " > " + y;
         } else if (x < y) {
@@ -47,11 +74,11 @@ public class Main {
         }
     }
 
-    public static boolean sum3 (int x, int y, int z) {
+    public boolean sum3 (int x, int y, int z) {
         return (x + y == z) || (x + z == y) || (y + z == x);
     }
 
-    public static String age (int x) {
+    public String age (int x) {
         int lastDigit = x % 10;
         int lastTwoDigits = x % 100;
 
@@ -64,7 +91,7 @@ public class Main {
         }
     }
 
-    public static void printDays() {
+    public void printDays() {
         Scanner scanner = new Scanner(System.in);
         String x = scanner.nextLine();
         x = x.toLowerCase();
@@ -90,7 +117,8 @@ public class Main {
         }
     }
 
-    public static String reverseListNumbs (int x) {
+    // Задание 3
+    public String reverseListNumbs (int x) {
         StringBuilder result = new StringBuilder();
 
         for (int i = x; i >= 0; i--) {
@@ -99,7 +127,7 @@ public class Main {
         return result.toString().trim();
     }
 
-    public static int pow (int x, int y) {
+    public int pow (int x, int y) {
         if (y == 0) {
             return 1;
         }
@@ -111,7 +139,7 @@ public class Main {
         return result;
     }
 
-    public static boolean equalNum(int x) {
+    public boolean equalNum(int x) {
         int lastDigit = x % 10;
 
         while (x > 0) {
@@ -123,7 +151,7 @@ public class Main {
         return true;
     }
 
-    public static void leftTriangle (int x) {
+    public void leftTriangle (int x) {
         for (int i = 1; i <= x; i++) {
             for (int j = 1; j <= i; j++) {
                 System.out.print("*");
@@ -132,7 +160,7 @@ public class Main {
         }
     }
 
-    public static void guessGame() {
+    public void guessGame() {
         Random random = new Random();
         int guessedNumber = random.nextInt(10);
 
@@ -153,7 +181,8 @@ public class Main {
         out.println("Количество попыток: " + tries);
     }
 
-    public static int findLast (int [] arr, int x) {
+    // Задание 4
+    public int findLast (int [] arr, int x) {
         for (int i = arr.length - 1; i >= 0; i--) {
             if (arr[i] == x) {
                 return i;
@@ -162,7 +191,7 @@ public class Main {
         return -1;
     }
 
-    public static int[] add (int [] arr, int x, int pos) {
+    public int[] add (int [] arr, int x, int pos) {
         int [] newArr = new int[arr.length + 1];
 
         for (int i=0; i < pos; i++) {
@@ -175,7 +204,7 @@ public class Main {
         return newArr;
     }
 
-    public static void reverse (int [] arr) {
+    public void reverse (int [] arr) {
         int left = 0;
         int right = arr.length - 1;
 
@@ -189,7 +218,7 @@ public class Main {
         }
     }
 
-    public static int [] concat (int [] arr1, int[] arr2) {
+    public int [] concat (int [] arr1, int[] arr2) {
         int[] result = new int[arr1.length + arr2.length];
         for (int i = 0; i < arr1.length; i++) {
             result[i] = arr1[i];
@@ -200,7 +229,7 @@ public class Main {
         return result;
     }
 
-    public static int[] deleteNegative(int[] arr) {
+    public int[] deleteNegative(int[] arr) {
         int count = 0;
         for (int num : arr) {
             if (num >= 0) {
@@ -219,114 +248,111 @@ public class Main {
 
     public static void main (String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Main methods = new Main();
 
         out.println("Задание 1 \nМетоды\n" + "-----------------");
-        out.print("Задача 2 \nСумма цифр\nВведите x: ");
-        int x = scanner.nextInt();
-        out.println(sumLastNumbs(x) + "\n");
 
-        out.print("Задача 4 \nОпределение положительного числа\nВведите x: ");
-        x = scanner.nextInt();
-        out.println(isPositive(x) + "\n");
+        int x = getIntInput(scanner, "Задача 2 \nСумма цифр\nВведите x: ");
+        out.println(methods.sumLastNumbs(x) + "\n");
+
+        x = getIntInput(scanner, "Задача 4 \nОпределение положительного числа\nВведите x: ");
+        out.println(methods.isPositive(x) + "\n");
 
         out.print("Задача 6 \nОпределение заглавной буквы\nВведите x: ");
-        char character = scanner.next().charAt(0);
-        out.println(isUpperCase(character) + "\n");
+        char character = getCharInput(scanner);
+        out.println(methods.isUpperCase(character) + "\n");
 
-        out.print("Задача 8 \nОпределение целого деления\nВведите a: ");
-        int a = scanner.nextInt();
-        out.print("Введите b: ");
-        int b = scanner.nextInt();
-        out.println(isDivisor(a, b) + "\n");
+        int a = getIntInput(scanner, "Задача 8 \nОпределение целого деления\nВведите a: ");
+        int b = getIntInput(scanner, "Введите b: ");
+        out.println(methods.isDivisor(a, b) + "\n");
 
-        out.print("Задача 10 \nСумма разряда единиц\nВведите a: ");
-        a = scanner.nextInt();
-        out.print("Введите b: ");
-        b = scanner.nextInt();
-        out.println(lastNumbsSum(a, b) + "\n");
+        a = getIntInput(scanner, "Задача 10 \nСумма разряда единиц\nВведите a: ");
+        b = getIntInput(scanner, "Введите b: ");
+        out.println(methods.lastNumbsSum(a, b) + "\n");
 
         out.println("Задание 2 \n" + "-----------------");
-        out.print("Задача 2 \nБезопасное деление\nВведите x: ");
-        x = scanner.nextInt();
-        out.print("Введите y: ");
-        int y = scanner.nextInt();
-        out.println(safeDiv(x, y) + "\n");
 
-        out.print("Задача 4 \nСтрока сравнения\nВведите x: ");
-        x = scanner.nextInt();
-        out.print("Введите y: ");
-        y = scanner.nextInt();
-        out.println(makeDecision(x, y) + "\n");
+        x = getIntInput(scanner, "Задача 2 \nБезопасное деление\nВведите x: ");
+        int y = getIntInput(scanner, "Введите y: ");
+        out.println(methods.safeDiv(x, y) + "\n");
 
-        out.print("Задача 6 \nТройная сумма\nВведите x: ");
-        x = scanner.nextInt();
-        out.print("Введите y: ");
-        y = scanner.nextInt();
-        out.print("Введите z: ");
-        int z = scanner.nextInt();
-        out.println(sum3(x, y, z) + "\n");
+        x = getIntInput(scanner, "Задача 4 \nСтрока сравнения\nВведите x: ");
+        y = getIntInput(scanner, "Введите y: ");
+        out.println(methods.makeDecision(x, y) + "\n");
 
-        out.print("Задача 8 \nОпределение года\nВведите x: ");
-        x = scanner.nextInt();
-        out.println(age(x) + "\n");
+        x = getIntInput(scanner, "Задача 6 \nТройная сумма\nВведите x: ");
+        y = getIntInput(scanner, "Введите y: ");
+        int z = getIntInput(scanner, "Введите z: ");
+        out.println(methods.sum3(x, y, z) + "\n");
+
+        x = getIntInput(scanner, "Задача 8 \nОпределение года\nВведите x: ");
+        out.println(methods.age(x) + "\n");
 
         out.print("Задача 10 \nДень недели\nВведите s: ");
-        printDays();
+        methods.printDays();
 
         out.println("\nЗадание 3 \nЦиклы\n" + "-----------------");
-        out.print("Задача 2 \nЧисла наоборот\nВведите x: ");
-        x = scanner.nextInt();
-        out.println(reverseListNumbs(x) + "\n");
 
-        out.print("Задача 4 \nВозведение в степень\nВведите x: ");
-        x = scanner.nextInt();
-        out.print("Введите y: ");
-        y = scanner.nextInt();
-        out.println(pow(x, y) + "\n");
+        x = getIntInput(scanner, "Задача 2 \nЧисла наоборот\nВведите x: ");
+        out.println(methods.reverseListNumbs(x) + "\n");
 
-        out.print("Задача 6 \nОдинаковость\nВведите x: ");
-        x = scanner.nextInt();
-        out.println(equalNum(x) + "\n");
+        x = getIntInput(scanner, "Задача 4 \nВозведение в степень\nВведите x: ");
+        y = getIntInput(scanner, "Введите y: ");
+        out.println(methods.pow(x, y) + "\n");
 
-        out.print("Задача 8 \nЛевый треугольник\nВведите x: ");
-        x = scanner.nextInt();
-        leftTriangle(x);
+        x = getIntInput(scanner, "Задача 6 \nОдинаковость\nВведите x: ");
+        out.println(methods.equalNum(x) + "\n");
+
+        x = getIntInput(scanner, "Задача 8 \nЛевый треугольник\nВведите x: ");
+        methods.leftTriangle(x);
 
         out.print("\nЗадача 10 \nУгадайка\n");
-        guessGame();
+        methods.guessGame();
 
         out.println("\nЗадание 4 \nМассивы\n" + "-----------------");
-        int [] array = {5, 4, 7, 2, 1, 2};
+
+        int[] array = new int[6];
+        Random random = new Random();
+        for (int i = 0; i < array.length; i++) {
+            array[i] = random.nextInt(10) + 1;
+        }
         out.println(Arrays.toString(array) + "\n");
 
-        out.print("Задача 2 \nПоиск последнего значения\nВведите x: ");
-        x = scanner.nextInt();
-        int index = findLast(array, x);
+        x = getIntInput(scanner, "Задача 2 \nПоиск последнего значения\nВведите x: ");
+        int index = methods.findLast(array, x);
         out.println("Индекс последнего вхождения " + x + " в массив: " + index + "\n");
 
-        out.print("Задача 4 \nДобавление в массив\nВведите x: ");
-        x = scanner.nextInt();
-        out.print("Введите pos: ");
-        int pos = scanner.nextInt();
-        int[] newArr = add(array, x, pos);
+        x = getIntInput(scanner, "Задача 4 \nДобавление в массив\nВведите x: ");
+        int pos = getIntInput(scanner, "Введите pos: ");
+        int[] newArr = methods.add(array, x, pos);
         out.println("Новый массив: " + Arrays.toString(newArr) + "\n");
 
         out.print("Задача 6 \nРеверс\n");
-        reverse(array);
+        methods.reverse(array);
         out.println("Реверс массива: " + Arrays.toString(array) + "\n");
 
         out.print("Задача 8 \nОбъединение\n");
-        int [] array1 = {1, 2, 3, 4};
-        int [] array2 = {8, 6, 7};
-        out.println("Массив 1: " + Arrays.toString(array1) + "\n Массив 2: " + Arrays.toString(array2));
+        int[] array1 = new int[3];
+        for (int i = 0; i < array1.length; i++) {
+            array1[i] = random.nextInt(10) + 1;
+        }
+        int[] array2 = new int[4];
+        for (int i = 0; i < array2.length; i++) {
+            array2[i] = random.nextInt(10) + 1;
+        }
+        out.println("Массив 1: " + Arrays.toString(array1) + "\nМассив 2: " + Arrays.toString(array2));
 
-        int[] result = concat(array1, array2);
+        int[] result = methods.concat(array1, array2);
         out.println("Объединенный массив: " + Arrays.toString(result) + "\n");
 
         out.print("Задача 10 \nУдалить негативный\n");
-        array = new int[]{1, 2, -2, 3, -4, 7};
+        array = new int[5];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = random.nextInt(21) - 10;
+        }
+
         out.println("Массив с негативными значениями: " + Arrays.toString(array));
-        result = deleteNegative(array);
+        result = methods.deleteNegative(array);
         out.println("Массив без негативных значений: " + Arrays.toString(result));
     }
 }
